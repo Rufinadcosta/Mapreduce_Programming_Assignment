@@ -1,59 +1,59 @@
-In this assignment, you will use the NYC TLC yellow taxi data set for the year 2017 and perform various operations using the big data tools that you have learnt about so far.
+# NYC Yellow Taxi Big Data Pipeline (AWS + Hadoop + MRJob) - Mapreduce Programming
 
-This session contains the following segments -
+## Project Overview
+This end-to-end project involves ingesting large-scale NYC taxi data into a big data ecosystem using cloud and Hadoop tools. It includes data loading into AWS RDS, transferring data into HBase via Apache Sqoop and bulk imports, and running analytical MapReduce jobs using MRJob on AWS EMR.
 
-Introduction
-Dataset Description
-Tasks
-Evaluation Rubric
-Final Submission
-In addition, optional sessions are also included, in which you will be reintroduced to some of the concepts covered in the course. You will learn all about MRJob, a popular library created by Yelp for simplifying the process of writing MapReduce code. You will use Apache Sqoop and Apache HBase. You will learn how to work with AWS RDS (Relational Database Service).
- 
+## Dataset
+NYC TLC Yellow Taxi Data for 2017 (January–April), publicly hosted CSV files containing ride-level trip data:
+- Trip times, distances, fares, tips, payment types, pickup & drop-off locations.
 
-The data set for the assignment can be downloaded from these links:
+##  Technologies & Tools Used
+- **AWS RDS (MySQL)** – cloud-hosted relational database for initial data storage  
+- **Apache Sqoop** – used to ingest data from RDS into HBase  
+- **Apache HBase** – NoSQL store for structured trip data  
+- **AWS EMR (Elastic MapReduce)** – Hadoop cluster to run processing jobs  
+- **MRJob (Python)** – simplifies writing MapReduce jobs in Python  
+- **HDFS, Hadoop Streaming, Python**
 
-https://nyc-tlc-upgrad.s3.amazonaws.com/yellow_tripdata_2017-01.csv
-https://nyc-tlc-upgrad.s3.amazonaws.com/yellow_tripdata_2017-02.csv
-https://nyc-tlc-upgrad.s3.amazonaws.com/yellow_tripdata_2017-03.csv
-https://nyc-tlc-upgrad.s3.amazonaws.com/yellow_tripdata_2017-04.csv
-https://nyc-tlc-upgrad.s3.amazonaws.com/yellow_tripdata_2017-05.csv
-https://nyc-tlc-upgrad.s3.amazonaws.com/yellow_tripdata_2017-06.csv
+## Data Ingestion Pipeline
+- ✅ Loaded `yellow_tripdata_2017-01.csv` and `yellow_tripdata_2017-02.csv` into AWS RDS (MySQL)  
+- ✅ Used **Apache Sqoop** to move data from RDS into **HBase tables**  
+- ✅ Performed **bulk import** of `2017-03.csv` and `2017-04.csv` directly into HBase using Hadoop and relevant import tools  
 
-Tasks:
-Data Ingestion Tasks:
+##  MapReduce Analytical Tasks (MRJob)
+Each task is implemented using MRJob and run on AWS EMR:
 
-Task 1. Create an RDS instance in your AWS account and upload the data to the RDS instance.
+1. 🔹 **Most Trips & Revenue by Vendor**
+   - Count of trips and total fare revenue grouped by vendor
 
-Since the dataset is huge, you need to upload the data from only two files (i.e. yellow_tripdata_2017-01.csv & yellow_tripdata_2017-02.csv) from the dataset.
+2. 🔹 **Top Revenue Generating Pickup Location**
+   - Total revenue generated from each pickup zone
 
-IMPORTANT NOTE: You will need to create an appropriate schema before uploading the data sets to AWS RDS (you can find the data dictionary in the previous segments). The steps on how to create an AWS RDS instance can be found in the Additional content of the 'Introduction to Cloud Computing and AWS Setup' module and the steps to work with RDS in the link shared in the next segment)
+3. 🔹 **Payment Types Used**
+   - Count of each payment method used by passengers (sorted)
 
- 
+4. 🔹 **Average Trip Duration per Pickup Location**
+   - Computed from pickup and drop-off timestamps
 
-Task 2. Use Sqoop command to ingest the data from RDS into the HBase Table.
+5. 🔹 **Tips-to-Revenue Ratio by Pickup Location**
+   - Average ratio of tips to total revenue by location (sorted)
 
- 
+6. 🔹 **Revenue Over Time**
+   - Average revenue per trip by:
+     - Hour of day (day vs. night)
+     - Day type (weekday vs. weekend)
 
-Task 3. Bulk import data from next two files in the dataset on your EMR cluster to your HBase Table using the relevant codes.
+##  Outcome
+This project showcases:
+- Ability to design and implement real-world big data ingestion pipelines
+- Proficiency in AWS ecosystem (RDS, EMR, HBase)
+- Skill in writing scalable MapReduce jobs using MRJob
+- Hands-on experience with data engineering workflows
 
-Note: For the above task 3, you just need to import data from the subsequent 2 csv files (i.e. yellow_tripdata_2017-03.csv & yellow_tripdata_2017-04.csv) on your EMR cluster.
+## Notes
+- All schema designs, job logs, and output files are organized per task  
+- MRJob scripts are modular and optimized for distributed processing
 
- 
+---
 
-MapReduce Tasks:
 
-Task 4. Write MapReduce codes to perform the tasks using the files you’ve downloaded on your EMR Instance:
-
-Which vendors have the most trips, and what is the total revenue generated by that vendor?
- 
-Which pickup location generates the most revenue? 
- 
-What are the different payment types used by customers and their count? The final results should be in a sorted format.
- 
-What is the average trip time for different pickup locations?
- 
-Calculate the average tips to revenue ratio of the drivers for different pickup locations in sorted format.
- 
-How does revenue vary over time? Calculate the average trip revenue per month - analysing it by hour of the day (day vs night) and the day of the week (weekday vs weekend).
- 
-NOTE: It's recommended to use MRJob for completing the MapReduce tasks above.
